@@ -37,7 +37,7 @@ public class ListAdapter extends RecyclerView.Adapter {
     @Override
     public int getItemViewType(int position) {
 
-        return 1;
+        return 0;
 
     }
 
@@ -78,11 +78,12 @@ public class ListAdapter extends RecyclerView.Adapter {
     public void updateList(List<Resource> listData) {
         this.listData=listData;
         notifyDataSetChanged();
-
+        Log.d(TAG, "updateList: "+listData.size());
     }
 
     @Override
     public int getItemCount() {
+        Log.d(TAG, "getItemCount: "+listData.size());
         return listData.size();
     }
 

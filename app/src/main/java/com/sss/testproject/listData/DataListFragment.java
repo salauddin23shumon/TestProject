@@ -75,7 +75,7 @@ public class DataListFragment extends Fragment {
             public void onResponse(Call<ListResponse> call, Response<ListResponse> response) {
                 if (response.isSuccessful()){
                     Log.d(TAG, "onResponse: "+response.body().getResults().getResources().size());
-
+                    adapter.updateList(response.body().getResults().getResources());
                 }else {
                     Log.d(TAG, "onResponse: "+response.code());
                 }
