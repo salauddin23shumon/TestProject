@@ -37,6 +37,8 @@ public class ListAdapter extends RecyclerView.Adapter {
     @Override
     public int getItemViewType(int position) {
 
+//        if (listData.get(position).getVideo().contains(" "))
+//            return 0;
         return 0;
 
     }
@@ -65,6 +67,7 @@ public class ListAdapter extends RecyclerView.Adapter {
         if (holder instanceof ViewHolderOne) {
             ViewHolderOne viewHolderOne = (ViewHolderOne) holder;
             ((ViewHolderOne) holder).textView.setText(listData.get(position).getOwner().getUsername());
+            Picasso.get().load(listData.get(position).getOwner().getAvatar()).into(((ViewHolderOne) holder).imageView);
         } else if (holder instanceof ViewHolderTwo) {
             ViewHolderTwo viewHolderTwo = (ViewHolderTwo) holder;
 //            ((ViewHolderTwo) holder).videoView.set
