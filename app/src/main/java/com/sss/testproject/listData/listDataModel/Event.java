@@ -3,9 +3,8 @@ package com.sss.testproject.listData.listDataModel;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.sss.testproject.listData.adapter.RecyclerViewItem;
 
-public class Event  extends RecyclerViewItem {
+public class Event  {
 
     @SerializedName("title")
     @Expose
@@ -16,6 +15,7 @@ public class Event  extends RecyclerViewItem {
     @SerializedName("end_event")
     @Expose
     private String endEvent;
+
 
     public String getTitle() {
         return title;

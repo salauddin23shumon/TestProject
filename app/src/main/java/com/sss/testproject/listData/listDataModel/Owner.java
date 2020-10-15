@@ -3,9 +3,8 @@ package com.sss.testproject.listData.listDataModel;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
-import com.sss.testproject.listData.adapter.RecyclerViewItem;
 
-public class Owner  extends RecyclerViewItem {
+public class Owner {
 
     @SerializedName("fullname")
     @Expose
@@ -19,6 +18,7 @@ public class Owner  extends RecyclerViewItem {
     @SerializedName("avatar")
     @Expose
     private String avatar;
+
 
     public String getFullname() {
         return fullname;

@@ -1,5 +1,6 @@
 package com.sss.testproject.listData.adapter;
 
+import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,99 +18,78 @@ import com.sss.testproject.listData.listDataModel.Resource;
 
 import java.util.List;
 
-public class ListAdapter extends RecyclerView.Adapter {
+public class ListAdapter extends RecyclerView.Adapter<ListAdapter.DataViewHolder> {
 
     private static final String TAG = "RecyclerAdapter";
-    List<Resource> listData;
-    private static final int HEADER_ITEM = 0;
-    //Footer Item Type
-    private static final int FOOTER_ITEM = 1;
-
-    private List<RecyclerViewItem> recyclerViewItems;
+    private List<Resource> resources;
+    private Context context;
 
 
-    public ListAdapter(List<Resource> listData) {
-        this.listData = listData;
-    }
-
-
-
-    @Override
-    public int getItemViewType(int position) {
-
-//        if (listData.get(position).getVideo().contains(" "))
-//            return 0;
-        return 0;
-
+    public ListAdapter(List<Resource> resources, Context context) {
+        this.resources = resources;
+        this.context = context;
     }
 
     @NonNull
     @Override
-    public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+    public DataViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
 
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View row;
-
-        if (viewType == HEADER_ITEM) {
-            row = inflater.inflate(R.layout.image_row, parent, false);
-            return new ViewHolderOne(row);
-        } else if (viewType == FOOTER_ITEM) {
-            row = inflater.inflate(R.layout.video_row, parent, false);
-            return new ViewHolderTwo(row);
-        }
-        return null;
+        View row = inflater.inflate(R.layout.single_row_item, parent, false);
+        return new DataViewHolder(row);
     }
 
     @Override
-    public void onBindViewHolder(@NonNull RecyclerView.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull DataViewHolder holder, int position) {
+
+        holder.nameTv.setText(resources.get(position).getOwner().getFullname());
+        holder.teamTv.setText(resources.get(position).getOwner().getPrimaryTeam());
+        holder.eventTv.setText(resources.get(position).getEvent().getTitle());
+        holder.captionTv.setText(resources.get(position).getCaption());
+        Picasso.get().load(resources.get(position).getOwner().getAvatar()).into(holder.avatarIV);
 
 
-        if (holder instanceof ViewHolderOne) {
-            ViewHolderOne viewHolderOne = (ViewHolderOne) holder;
-            ((ViewHolderOne) holder).textView.setText(listData.get(position).getOwner().getUsername());
-            Picasso.get().load(listData.get(position).getOwner().getAvatar()).into(((ViewHolderOne) holder).imageView);
-        } else if (holder instanceof ViewHolderTwo) {
-            ViewHolderTwo viewHolderTwo = (ViewHolderTwo) holder;
-//            ((ViewHolderTwo) holder).videoView.set
-//            viewHolderTwo.texViewQuote.setText(footer.getQuote());
-//            viewHolderTwo.textViewAuthor.setText(footer.getAuthor());
-//            Picasso.get().load(footer.getImageUrl()).into(footerHolder.imageViewFooter);
+        if (resources.get(position).getPhoto()!=null && !(resources.get(position).getPhoto().equals(""))) {
+            Picasso.get().load(resources.get(position).getPhoto()).into(holder.eventIV);
+        }else {
+            Picasso.get().load(R.drawable.no_img_found).into(holder.eventIV);
+        }
 
+        if (!(resources.get(position).getVideo().equals(""))){
+            holder.videoView.setVideoPath(resources.get(position).getVideo());
+        }else {
+            Log.d(TAG, "onBindViewHolder: no video found");
+            holder.videoView.setVisibility(View.GONE);
         }
     }
 
     public void updateList(List<Resource> listData) {
-        this.listData=listData;
+        this.resources =listData;
         notifyDataSetChanged();
         Log.d(TAG, "updateList: "+listData.size());
     }
 
     @Override
     public int getItemCount() {
-        Log.d(TAG, "getItemCount: "+listData.size());
-        return listData.size();
+        Log.d(TAG, "getItemCount: "+ resources.size());
+        return resources.size();
     }
 
-    class ViewHolderOne extends RecyclerView.ViewHolder {
+    class DataViewHolder extends RecyclerView.ViewHolder {
 
-        TextView textView, rowCountTextView;
-        ImageView imageView;
-        public ViewHolderOne(@NonNull View itemView) {
-            super(itemView);
-            textView = itemView.findViewById(R.id.textView);
-            rowCountTextView = itemView.findViewById(R.id.rowCountTextView);
-            imageView = itemView.findViewById(R.id.imageView);
-
-        }
-    }
-
-    class ViewHolderTwo extends RecyclerView.ViewHolder {
-
+        TextView nameTv, teamTv, eventTv, captionTv;
+        ImageView avatarIV, eventIV;
         VideoView videoView;
-        public ViewHolderTwo(@NonNull View itemView) {
+        public DataViewHolder(@NonNull View itemView) {
             super(itemView);
-            videoView = itemView.findViewById(R.id.textView);
+            nameTv = itemView.findViewById(R.id.nameTv);
+            teamTv = itemView.findViewById(R.id.teamTv);
+            eventTv = itemView.findViewById(R.id.eventTv);
+            captionTv = itemView.findViewById(R.id.captionTv);
+            avatarIV = itemView.findViewById(R.id.avatarIV);
+            eventIV = itemView.findViewById(R.id.imageView);
+            videoView = itemView.findViewById(R.id.videoView);
+
         }
     }
-
 }

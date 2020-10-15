@@ -18,7 +18,6 @@ import com.sss.testproject.listData.adapter.ListAdapter;
 import com.sss.testproject.listData.listDataModel.ListResponse;
 import com.sss.testproject.listData.listDataModel.Resource;
 import com.sss.testproject.networking.RetrofitClient;
-import com.sss.testproject.userLogin.loginModel.LoginResponse;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +27,6 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 import static com.sss.testproject.utility.Constant.LIST_DATA_URL;
-import static com.sss.testproject.utility.Constant.LOGIN_URL;
 
 
 public class DataListFragment extends Fragment {
@@ -50,7 +48,7 @@ public class DataListFragment extends Fragment {
         super.onAttach(context);
         this.context=context;
         resources=new ArrayList<>();
-        adapter=new ListAdapter(resources);
+        adapter=new ListAdapter(resources, context);
     }
 
     @Override
