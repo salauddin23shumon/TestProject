@@ -19,7 +19,8 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitClient {
     private static Retrofit retrofit;
-    private static RetrofitClient retrofitClient;
+    private static RetrofitClient retrofitClient1;
+    private static RetrofitClient retrofitClient2;
 
 
     private RetrofitClient(String url) {
